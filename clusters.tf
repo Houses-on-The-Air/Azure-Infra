@@ -6,6 +6,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix              = "aks"
   sku_tier                = var.cluster_sku_tier
   private_cluster_enabled = true
+
   api_server_access_profile {
     authorized_ip_ranges = var.authorized_ip_ranges
   }
@@ -36,6 +37,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
       key_data = var.ssh_public_key
     }
   }
+
+
 
   tags = {
     environment = var.environment

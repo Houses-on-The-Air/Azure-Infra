@@ -8,5 +8,5 @@ resource "azurerm_virtual_network_peering" "peer" {
   allow_gateway_transit     = false
   use_remote_gateways       = false
 
-  depends_on = [ azurerm_virtual_network.vnet ]
+  depends_on = [azurerm_virtual_network.vnet]
 }
