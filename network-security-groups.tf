@@ -11,7 +11,30 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
+    source_address_prefixes    = var.authorized_ip_ranges
+    destination_address_prefix = "*"
+    description                = "Allow SSH access from authorized IP ranges only"
+  }
+
+  security_rule {
+    name                       = "DenyAllInbound"
+    priority                   = 4096
+    direction                  = "Inbound"
+    access                     = "Deny"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
+    description                = "Deny all other inbound traffic"
   }
+
+  tags = merge(
+    var.tags,
+    {
+      environment = var.environment
+      application = var.app_name
+      managed_by  = "terraform"
+    }
+  )
 }
